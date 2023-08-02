@@ -5,6 +5,14 @@ import { type User } from './types.d'
 
 function App () {
   const [users, setUsers] = useState<User[]>([])
+  const [showColors, setShowColors] = useState(false)
+  const [sortByCountry, setSortByCountry] = useState(false)
+  const ToggleColors = () => {
+    setShowColors(!showColors)
+  }
+  const toggleSortByCountry = () => {
+    setSortByCountry(prevState => !prevState)
+  }
   useEffect(() => {
     fetch('https://randomuser.me/api?results=100')
       .then(async res => await res.json())
@@ -15,11 +23,20 @@ function App () {
         console.error(err)
       })
   }, [])
+  const sortedUsers = sortByCountry ? [...users].sort((a, b) => a.location.country.localeCompare(b.location.country)) : users
 
   return (
     <div className="App">
       <h1>Prueba Tecnica</h1>
-      <UsersList users={users} />
+      <header>
+        <button onClick={ToggleColors}>
+          Colorear Filas
+        </button>
+        <button onClick={toggleSortByCountry}>
+         {sortByCountry ? 'No ordenar por País' : 'Ordenar por País'}
+        </button>
+      </header>
+      <UsersList showColors={showColors} users={sortedUsers} />
     </div>
   )
 }

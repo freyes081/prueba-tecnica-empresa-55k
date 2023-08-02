@@ -1,12 +1,13 @@
 import { type User } from '../types.d'
 
 interface Props {
+  showColors: boolean
   users: User[]
 }
 
-export function UsersList ({ users }: Props) {
+export function UsersList ({ users, showColors }: Props) {
   return (
-    <table>
+    <table width={'100%'}>
       <thead>
         <tr>
           <th>Foto</th>
@@ -16,9 +17,9 @@ export function UsersList ({ users }: Props) {
           <th>Acciones</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody className={showColors ? 'table--showColors' : ''}>
         {users.map((user) => (
-          <tr key={user.id.value}>
+            <tr key={user.email}>
             <td><img src={user.picture.thumbnail} /></td>
             <td>{user.name.first}</td>
             <td>{user.name.last}</td>
