@@ -1,11 +1,12 @@
 import { type User } from '../types.d'
 
 interface Props {
+  deleteUser: (email: string) => void
   showColors: boolean
   users: User[]
 }
 
-export function UsersList ({ users, showColors }: Props) {
+export function UsersList ({ deleteUser, users, showColors }: Props) {
   return (
     <table width={'100%'}>
       <thead>
@@ -24,7 +25,11 @@ export function UsersList ({ users, showColors }: Props) {
             <td>{user.name.first}</td>
             <td>{user.name.last}</td>
             <td>{user.location.country}</td>
-            <td><button>Borrar</button></td>
+            <td><button onClick={() => {
+              deleteUser(user.email)
+            }}>
+              Borrar
+              </button></td>
           </tr>
 
         ))}

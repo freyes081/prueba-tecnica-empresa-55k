@@ -23,7 +23,13 @@ function App () {
         console.error(err)
       })
   }, [])
-  const sortedUsers = sortByCountry ? [...users].sort((a, b) => a.location.country.localeCompare(b.location.country)) : users
+  const sortedUsers = sortByCountry
+    ? [...users].sort((a, b) => a.location.country.localeCompare(b.location.country))
+    : users
+  const handleDelete = (email: string) => {
+    const filteredUsers = users.filter(user => user.email !== email)
+    setUsers(filteredUsers)
+  }
 
   return (
     <div className="App">
@@ -36,7 +42,7 @@ function App () {
          {sortByCountry ? 'No ordenar por País' : 'Ordenar por País'}
         </button>
       </header>
-      <UsersList showColors={showColors} users={sortedUsers} />
+      <UsersList deleteUser={handleDelete} showColors={showColors} users={sortedUsers} />
     </div>
   )
 }
